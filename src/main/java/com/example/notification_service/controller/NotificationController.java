@@ -23,6 +23,9 @@ public class NotificationController {
 
     @PostMapping(consumes = "application/x-www-form-urlencoded")
     public Notification createNotification(@ModelAttribute Notification notification) {
+        if (notification == null) {
+            throw new IllegalArgumentException("Notification cannot be null");
+        }
         return notificationRepository.save(notification);
     }
 
