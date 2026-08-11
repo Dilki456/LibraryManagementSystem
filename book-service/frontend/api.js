@@ -3,7 +3,6 @@ const API_BASE_URL = "http://localhost:8080";
 const API_KEY = "library123";
 
 async function apiRequest(endpoint, options = {}) {
-
     const config = {
         ...options,
 
@@ -20,7 +19,6 @@ async function apiRequest(endpoint, options = {}) {
     );
 
     if (!response.ok) {
-
         let errorMessage = `Request failed: ${response.status}`;
 
         try {
@@ -29,7 +27,6 @@ async function apiRequest(endpoint, options = {}) {
             if (text) {
                 errorMessage = text;
             }
-
         } catch (error) {
             console.error(error);
         }
@@ -50,54 +47,37 @@ async function apiRequest(endpoint, options = {}) {
     return response.text();
 }
 
-
 /* ================= BOOK API ================= */
 
 async function getAllBooks() {
-
     return apiRequest("/books");
 }
 
-
 async function getBookById(id) {
-
     return apiRequest(`/books/${id}`);
 }
 
-
 async function addBook(book) {
-
     return apiRequest("/books", {
-
         method: "POST",
-
         body: JSON.stringify(book)
     });
 }
-
 
 async function updateBook(id, book) {
-
     return apiRequest(`/books/${id}`, {
-
         method: "PUT",
-
         body: JSON.stringify(book)
     });
 }
 
-
 async function deleteBook(id) {
-
     return apiRequest(`/books/${id}`, {
-
         method: "DELETE"
     });
 }
 
-
 async function searchBooks(title) {
-
     return apiRequest(
         `/books/search?title=${encodeURIComponent(title)}`
     );
