@@ -1,7 +1,8 @@
-package com.library.bookservice.controller;
+package com.example.book_service.controller;
 
-import com.library.bookservice.model.Book;
-import com.library.bookservice.service.BookService;
+import com.example.book_service.model.Book;
+import com.example.book_service.service.BookService;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,39 +21,39 @@ public class BookController {
 
     // Add Book
     @PostMapping
-    public Book addBook(@RequestBody Book book) {
+    public @NonNull Book addBook(@RequestBody @NonNull Book book) {
         return bookService.addBook(book);
     }
 
     // Get All Books
     @GetMapping
-    public List<Book> getAllBooks() {
+    public @NonNull List<Book> getAllBooks() {
         return bookService.getAllBooks();
     }
 
     // Get Book By ID
     @GetMapping("/{id}")
-    public Optional<Book> getBookById(@PathVariable String id) {
+    public @NonNull Optional<Book> getBookById(@PathVariable @NonNull String id) {
         return bookService.getBookById(id);
     }
 
     // Update Book
     @PutMapping("/{id}")
-    public Book updateBook(@PathVariable String id,
-                           @RequestBody Book book) {
+    public @NonNull Book updateBook(@PathVariable @NonNull String id,
+                           @RequestBody @NonNull Book book) {
         return bookService.updateBook(id, book);
     }
 
     // Delete Book
     @DeleteMapping("/{id}")
-    public String deleteBook(@PathVariable String id) {
+    public @NonNull String deleteBook(@PathVariable @NonNull String id) {
         bookService.deleteBook(id);
         return "Book Deleted Successfully";
     }
 
     // Search Books
     @GetMapping("/search")
-    public List<Book> searchBooks(@RequestParam String title) {
+    public @NonNull List<Book> searchBooks(@RequestParam @NonNull String title) {
         return bookService.searchBooks(title);
     }
 }

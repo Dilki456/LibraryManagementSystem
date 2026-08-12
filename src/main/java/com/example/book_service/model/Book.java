@@ -1,4 +1,4 @@
-package com.library.bookservice.model;
+package com.example.book_service.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
