@@ -29,8 +29,8 @@ public class BookService {
     }
 
     // Get Book by ID
-    public Optional<Book> getBookById(@NonNull String id) {
-        return bookRepository.findById(id);
+    public @NonNull Optional<Book> getBookById(@NonNull String id) {
+        return Objects.requireNonNull(bookRepository.findById(id));
     }
 
     // Update Book
