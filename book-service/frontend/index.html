@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Library Management System</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- ================= SIDEBAR ================= -->
+
+<aside class="sidebar">
+
+    <div class="brand">
+        <div class="brand-icon">📚</div>
+
+        <div>
+            <h2>LibraryMS</h2>
+            <span>Book Management</span>
+        </div>
+    </div>
+
+    <nav class="navigation">
+
+        <button class="nav-item active" onclick="showSection('dashboard', this)">
+            <span>📊</span>
+            Dashboard
+        </button>
+
+        <button class="nav-item" onclick="showSection('books', this)">
+            <span>📚</span>
+            Books
+        </button>
+
+        <button class="nav-item" onclick="openAddBookModal()">
+            <span>➕</span>
+            Add Book
+        </button>
+
+    </nav>
+
+    <div class="sidebar-footer">
+        <div class="api-status">
+            <span class="status-dot"></span>
+            <div>
+                <strong>Book API</strong>
+                <small id="apiStatus">Checking...</small>
+            </div>
+        </div>
+    </div>
+
+</aside>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="main-content">
+
+    <!-- HEADER -->
+
+    <header class="topbar">
+
+        <div>
+            <h1 id="pageTitle">Dashboard</h1>
+            <p id="pageSubtitle">
+                Manage your library books efficiently.
+            </p>
+        </div>
+
+        <div class="header-actions">
+
+            <button class="icon-button" onclick="loadBooks()" title="Refresh">
+                🔄
+            </button>
+
+            <button class="add-button" onclick="openAddBookModal()">
+                <span>+</span>
+                Add Book
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- ================= DASHBOARD ================= -->
+
+    <section id="dashboard" class="page-section active">
+
+        <div class="stats-grid">
+
+            <div class="stat-card">
+                <div class="stat-icon blue">📚</div>
+
+                <div>
+                    <span>Total Books</span>
+                    <strong id="totalBooks">0</strong>
+                </div>
+            </div>
+
+
+            <div class="stat-card">
+                <div class="stat-icon green">✓</div>
+
+                <div>
+                    <span>Available Copies</span>
+                    <strong id="availableCopies">0</strong>
+                </div>
+            </div>
+
+
+            <div class="stat-card">
+                <div class="stat-icon purple">📖</div>
+
+                <div>
+                    <span>Categories</span>
+                    <strong id="totalCategories">0</strong>
+                </div>
+            </div>
+
+
+            <div class="stat-card">
+                <div class="stat-icon orange">📦</div>
+
+                <div>
+                    <span>Total Quantity</span>
+                    <strong id="totalQuantity">0</strong>
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- QUICK ACTIONS -->
+
+        <div class="section-card">
+
+            <div class="section-header">
+
+                <div>
+                    <h2>Quick Actions</h2>
+                    <p>Manage your books from here.</p>
+                </div>
+
+            </div>
+
+
+            <div class="quick-actions">
+
+                <button onclick="openAddBookModal()" class="quick-card">
+                    <div>➕</div>
+                    <strong>Add New Book</strong>
+                    <span>Create a new book record</span>
+                </button>
+
+                <button onclick="showSection('books')" class="quick-card">
+                    <div>📚</div>
+                    <strong>View Books</strong>
+                    <span>Browse all library books</span>
+                </button>
+
+                <button onclick="loadBooks()" class="quick-card">
+                    <div>🔄</div>
+                    <strong>Refresh Data</strong>
+                    <span>Load latest book records</span>
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- RECENT BOOKS -->
+
+        <div class="section-card">
+
+            <div class="section-header">
+
+                <div>
+                    <h2>Recent Books</h2>
+                    <p>Latest books in your library.</p>
+                </div>
+
+                <button class="text-button" onclick="showSection('books')">
+                    View All →
+                </button>
+
+            </div>
+
+            <div id="recentBooks" class="recent-books">
+                <div class="loading">Loading books...</div>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= BOOKS ================= -->
+
+    <section id="books" class="page-section">
+
+        <div class="section-card">
+
+            <div class="books-toolbar">
+
+                <div class="search-container">
+
+                    <span>🔍</span>
+
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search books by title..."
+                        oninput="handleSearch()"
+                    >
+
+                    <button
+                        id="clearSearch"
+                        class="clear-search"
+                        onclick="clearSearch()"
+                        style="display:none;"
+                    >
+                        ×
+                    </button>
+
+                </div>
+
+                <button class="add-button" onclick="openAddBookModal()">
+                    + Add Book
+                </button>
+
+            </div>
+
+
+            <!-- BOOK TABLE -->
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                    <tr>
+                        <th>Book</th>
+                        <th>Author</th>
+                        <th>Category</th>
+                        <th>ISBN</th>
+                        <th>Quantity</th>
+                        <th>Available</th>
+                        <th>Actions</th>
+                    </tr>
+
+                    </thead>
+
+                    <tbody id="booksTableBody">
+
+                    <tr>
+                        <td colspan="7" class="loading">
+                            Loading books...
+                        </td>
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- ================= BOOK MODAL ================= -->
+
+<div id="bookModal" class="modal-overlay">
+
+    <div class="modal">
+
+        <div class="modal-header">
+
+            <div>
+                <h2 id="modalTitle">Add New Book</h2>
+                <p id="modalSubtitle">
+                    Enter the book details below.
+                </p>
+            </div>
+
+            <button class="close-button" onclick="closeBookModal()">
+                ×
+            </button>
+
+        </div>
+
+
+        <form id="bookForm" onsubmit="saveBook(event)">
+
+            <input type="hidden" id="bookId">
+
+
+            <div class="form-grid">
+
+                <div class="form-group full-width">
+
+                    <label>Book Title *</label>
+
+                    <input
+                        type="text"
+                        id="title"
+                        placeholder="Enter book title"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Author *</label>
+
+                    <input
+                        type="text"
+                        id="author"
+                        placeholder="Enter author name"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Category *</label>
+
+                    <input
+                        type="text"
+                        id="category"
+                        placeholder="e.g. Programming"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>ISBN *</label>
+
+                    <input
+                        type="text"
+                        id="isbn"
+                        placeholder="Enter ISBN"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Quantity *</label>
+
+                    <input
+                        type="number"
+                        id="quantity"
+                        min="0"
+                        placeholder="0"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Available Copies *</label>
+
+                    <input
+                        type="number"
+                        id="availableCopies"
+                        min="0"
+                        placeholder="0"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="modal-footer">
+
+                <button
+                    type="button"
+                    class="cancel-button"
+                    onclick="closeBookModal()"
+                >
+                    Cancel
+                </button>
+
+                <button type="submit" class="save-button" id="saveButton">
+                    Save Book
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- ================= DELETE MODAL ================= -->
+
+<div id="deleteModal" class="modal-overlay">
+
+    <div class="confirm-modal">
+
+        <div class="confirm-icon">
+            🗑️
+        </div>
+
+        <h2>Delete Book?</h2>
+
+        <p>
+            Are you sure you want to delete this book?
+            This action cannot be undone.
+        </p>
+
+        <div class="confirm-actions">
+
+            <button
+                class="cancel-button"
+                onclick="closeDeleteModal()"
+            >
+                Cancel
+            </button>
+
+            <button
+                class="delete-confirm-button"
+                onclick="confirmDelete()"
+            >
+                Delete
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= TOAST ================= -->
+
+<div id="toast" class="toast">
+
+    <span id="toastIcon">✓</span>
+
+    <div>
+        <strong id="toastTitle">Success</strong>
+        <p id="toastMessage">Operation completed.</p>
+    </div>
+
+</div>
+
+
+<!-- ================= LOADING ================= -->
+
+<div id="globalLoading" class="global-loading">
+
+    <div class="spinner"></div>
+
+    <span>Processing...</span>
+
+</div>
+
+
+<script src="api.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>

@@ -1,44 +1,62 @@
 package com.library.bookservice.config;
 
+import java.io.IOException;
+
+import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.stereotype.Component;
-import org.springframework.web.filter.OncePerRequestFilter;
-
-import java.io.IOException;
 
 @Component
 public class ApiKeyFilter extends OncePerRequestFilter {
 
     private static final String API_KEY = "library123";
-    private static final String API_KEY_HEADER = "x-api-key";
 
     @Override
-    protected boolean shouldNotFilter(HttpServletRequest request) {
+    protected void doFilterInternal(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            FilterChain filterChain) throws ServletException, IOException {
 
-        String path = request.getServletPath();
+        // CORS headers
+        response.setHeader(
+                "Access-Control-Allow-Origin",
+                "http://localhost:5500"
+        );
 
-        return path.startsWith("/swagger-ui")
-                || path.startsWith("/v3/api-docs")
-                || path.startsWith("/swagger-resources")
-                || path.startsWith("/webjars");
-    }
+        response.setHeader(
+                "Access-Control-Allow-Methods",
+                "GET, POST, PUT, DELETE, OPTIONS"
+        );
 
-    @Override
-    protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response,
-                                    FilterChain filterChain)
-            throws ServletException, IOException {
+        response.setHeader(
+                "Access-Control-Allow-Headers",
+                "Content-Type, x-api-key"
+        );
 
-        String apiKey = request.getHeader(API_KEY_HEADER);
+        response.setHeader(
+                "Access-Control-Allow-Credentials",
+                "true"
+        );
 
-        if (API_KEY.equals(apiKey)) {
-            filterChain.doFilter(request, response);
-        } else {
+        // Allow browser preflight request
+        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+            response.setStatus(HttpServletResponse.SC_OK);
+            return;
+        }
+
+        // API key validation
+        String requestApiKey = request.getHeader("x-api-key");
+
+        if (requestApiKey == null || !API_KEY.equals(requestApiKey)) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.getWriter().write("Invalid API Key");
+            return;
         }
+
+        filterChain.doFilter(request, response);
     }
 }
