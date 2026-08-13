@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Library Management System</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>Library Management System</h1>
+        <p>Borrow Service</p>
+    </header>
+
+    <main>
+
+        <!-- Borrow Book -->
+        <section class="card">
+
+            <h2>📚 Borrow a Book</h2>
+
+            <form id="borrowForm">
+
+                <div class="form-group">
+                    <label for="userId">User ID</label>
+
+                    <input
+                        type="text"
+                        id="userId"
+                        placeholder="Enter User ID"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="bookId">Book ID</label>
+
+                    <input
+                        type="text"
+                        id="bookId"
+                        placeholder="Enter Book ID"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="borrowDate">Borrow Date</label>
+
+                    <input
+                        type="date"
+                        id="borrowDate"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="dueDate">Due Date</label>
+
+                    <input
+                        type="date"
+                        id="dueDate"
+                        required
+                    >
+                </div>
+
+                <button type="submit">
+                    Borrow Book
+                </button>
+
+            </form>
+
+            <p id="message"></p>
+
+        </section>
+
+
+        <!-- Borrow Records -->
+        <section class="card">
+
+            <div class="section-header">
+
+                <h2>📋 Borrow Records</h2>
+
+                <button id="refreshBtn">
+                    🔄 Refresh
+                </button>
+
+            </div>
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>User ID</th>
+                            <th>Book ID</th>
+                            <th>Borrow Date</th>
+                            <th>Due Date</th>
+                            <th>Return Date</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="borrowTableBody">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
