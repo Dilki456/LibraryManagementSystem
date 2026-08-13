@@ -1,0 +1,22 @@
+services:
+  mongodb:
+    image: mongo:7
+    container_name: borrow-mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - borrow-mongo-data:/data/db
+
+  borrow-service:
+    build: .
+    container_name: borrow-service
+    ports:
+      - "8083:8083"
+    depends_on:
+      - mongodb
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://mongodb:27017/library_db
+      SERVER_PORT: 8083
+
+volumes:
+  borrow-mongo-data:
