@@ -1,11 +1,11 @@
 package com.library.bookservice.service;
 
+import com.library.bookservice.exception.BookNotFoundException;
 import com.library.bookservice.model.Book;
 import com.library.bookservice.repository.BookRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class BookService {
@@ -18,6 +18,7 @@ public class BookService {
 
     // Add Book
     public Book addBook(Book book) {
+        validateBookCopies(book);
         return bookRepository.save(book);
     }
 
@@ -27,23 +28,59 @@ public class BookService {
     }
 
     // Get Book by ID
-    public Optional<Book> getBookById(String id) {
-        return bookRepository.findById(id);
+    public Book getBookById(String id) {
+        return bookRepository.findById(id)
+                .orElseThrow(() ->
+                        new BookNotFoundException(
+                                "Book not found with id: " + id
+                        ));
     }
 
     // Update Book
     public Book updateBook(String id, Book book) {
-        book.setId(id);
-        return bookRepository.save(book);
+
+        Book existingBook = bookRepository.findById(id)
+                .orElseThrow(() ->
+                        new BookNotFoundException(
+                                "Book not found with id: " + id
+                        ));
+
+        validateBookCopies(book);
+
+        existingBook.setTitle(book.getTitle());
+        existingBook.setAuthor(book.getAuthor());
+        existingBook.setCategory(book.getCategory());
+        existingBook.setIsbn(book.getIsbn());
+        existingBook.setQuantity(book.getQuantity());
+        existingBook.setAvailableCopies(book.getAvailableCopies());
+
+        return bookRepository.save(existingBook);
     }
 
     // Delete Book
     public void deleteBook(String id) {
+
+        if (!bookRepository.existsById(id)) {
+            throw new BookNotFoundException(
+                    "Book not found with id: " + id
+            );
+        }
+
         bookRepository.deleteById(id);
     }
 
-    // Search Books
+    // Search Books by Title
     public List<Book> searchBooks(String title) {
-    return bookRepository.findByTitleContainingIgnoreCase(title);
-   }
+        return bookRepository.findByTitleContainingIgnoreCase(title);
+    }
+
+    // Business validation
+    private void validateBookCopies(Book book) {
+
+        if (book.getAvailableCopies() > book.getQuantity()) {
+            throw new IllegalArgumentException(
+                    "Available copies cannot be greater than total quantity"
+            );
+        }
+    }
 }
