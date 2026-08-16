@@ -1,12 +1,12 @@
-package com.example.notification_service;
+package com.library.bookservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class NotificationServiceApplication {
+public class BookServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(NotificationServiceApplication.class, args);
+        SpringApplication.run(BookServiceApplication.class, args);
     }
 }

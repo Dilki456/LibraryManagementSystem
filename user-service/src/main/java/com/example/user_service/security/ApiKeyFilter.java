@@ -22,36 +22,58 @@ public class ApiKeyFilter extends OncePerRequestFilter {
     private ApiKeyRepository apiKeyRepository;
 
     @Override
-    protected void doFilterInternal(@NonNull HttpServletRequest request, 
-                                    @NonNull HttpServletResponse response, 
-                                    @NonNull FilterChain filterChain)
+    protected void doFilterInternal(
+            @NonNull HttpServletRequest request,
+            @NonNull HttpServletResponse response,
+            @NonNull FilterChain filterChain)
             throws ServletException, IOException {
 
-        String path = request.getRequestURI();
+        // Get servlet path without the /api context path
+        String path = request.getServletPath();
 
-        // 1. Skip API Key verification for public authentication and documentation endpoints
-        if (path.startsWith("/auth/") || path.startsWith("/swagger-ui") || path.startsWith("/v3/api-docs") || path.equals("/")) {
+        // 1. Skip API Key verification for public endpoints
+        if (path.startsWith("/auth/")
+                || path.startsWith("/swagger-ui")
+                || path.startsWith("/v3/api-docs")
+                || path.startsWith("/webjars/")
+                || path.equals("/")) {
+
             filterChain.doFilter(request, response);
             return;
         }
 
-        // 2. Read X-API-KEY header (passed by API Gateway or direct client request)
+        // 2. Read X-API-KEY header
         String apiKey = request.getHeader("X-API-KEY");
+
+        // Also allow API key as request parameter
         if (apiKey == null || apiKey.isBlank()) {
             apiKey = request.getParameter("apiKey");
         }
 
-        // 3. Verify key against MongoDB
-        if (apiKey != null && apiKeyRepository.findByApiKeyAndActiveTrue(apiKey).isPresent()) {
-            // Set temporary authentication context so Spring Security permits execution
+        // 3. Verify API key against MongoDB
+        if (apiKey != null
+                && !apiKey.isBlank()
+                && apiKeyRepository.findByApiKeyAndActiveTrue(apiKey).isPresent()) {
+
+            // Set authentication if not already authenticated
             if (SecurityContextHolder.getContext().getAuthentication() == null) {
+
                 UsernamePasswordAuthenticationToken auth =
-                        new UsernamePasswordAuthenticationToken(apiKey, null, Collections.emptyList());
+                        new UsernamePasswordAuthenticationToken(
+                                apiKey,
+                                null,
+                                Collections.emptyList()
+                        );
+
                 SecurityContextHolder.getContext().setAuthentication(auth);
             }
+
             filterChain.doFilter(request, response);
+
         } else {
+
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setContentType("text/plain");
             response.getWriter().write("Invalid or missing API Key");
         }
     }
