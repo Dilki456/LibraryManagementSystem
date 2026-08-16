@@ -19,39 +19,34 @@ public class BookController {
         this.bookService = bookService;
     }
 
-    // Add Book
     @PostMapping
     public @NonNull Book addBook(@RequestBody @NonNull Book book) {
         return bookService.addBook(book);
     }
 
-    // Get All Books
     @GetMapping
     public @NonNull List<Book> getAllBooks() {
         return bookService.getAllBooks();
     }
 
-    // Get Book By ID
     @GetMapping("/{id}")
     public @NonNull Optional<Book> getBookById(@PathVariable @NonNull String id) {
         return bookService.getBookById(id);
     }
 
-    // Update Book
     @PutMapping("/{id}")
-    public @NonNull Book updateBook(@PathVariable @NonNull String id,
-                           @RequestBody @NonNull Book book) {
+    public @NonNull Book updateBook(
+            @PathVariable @NonNull String id,
+            @RequestBody @NonNull Book book) {
         return bookService.updateBook(id, book);
     }
 
-    // Delete Book
     @DeleteMapping("/{id}")
     public @NonNull String deleteBook(@PathVariable @NonNull String id) {
         bookService.deleteBook(id);
         return "Book Deleted Successfully";
     }
 
-    // Search Books
     @GetMapping("/search")
     public @NonNull List<Book> searchBooks(@RequestParam @NonNull String title) {
         return bookService.searchBooks(title);
