@@ -18,7 +18,7 @@ const state = {
    ========================================================= */
 
 function getApiKey() {
-    return localStorage.getItem("libraryApiKey") || "";
+    return localStorage.getItem("libraryApiKey") || "library123";
 }
 
 

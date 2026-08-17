@@ -10,7 +10,6 @@ import borrow_service.service.BorrowService;
 
 @RestController
 @RequestMapping("/api/borrow")
-@CrossOrigin(origins = "*")
 public class BorrowController {
 
     private final BorrowService service;
