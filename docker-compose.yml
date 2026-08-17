@@ -1,5 +1,31 @@
 services:
-  mongodb:
+
+  # =========================
+  # USER DATABASE
+  # =========================
+  user-mongodb:
+    image: mongo:7
+    container_name: user-mongodb
+    ports:
+      - "27021:27017"
+    volumes:
+      - user-mongo-data:/data/db
+
+  # =========================
+  # BOOK DATABASE
+  # =========================
+  book-mongodb:
+    image: mongo:7
+    container_name: book-mongodb
+    ports:
+      - "27020:27017"
+    volumes:
+      - book-mongo-data:/data/db
+
+  # =========================
+  # BORROW DATABASE
+  # =========================
+  borrow-mongodb:
     image: mongo:7
     container_name: borrow-mongodb
     ports:
@@ -7,16 +33,92 @@ services:
     volumes:
       - borrow-mongo-data:/data/db
 
+  # =========================
+  # NOTIFICATION DATABASE
+  # =========================
+  notification-mongodb:
+    image: mongo:7
+    container_name: notification-mongodb
+    ports:
+      - "27022:27017"
+    volumes:
+      - notification-mongo-data:/data/db
+
+  # =========================
+  # USER SERVICE
+  # =========================
+  user-service:
+    image: library-user-service:latest
+    container_name: user-service
+    ports:
+      - "8081:8081"
+    depends_on:
+      - user-mongodb
+    environment:
+      SERVER_PORT: 8081
+      SPRING_DATA_MONGODB_URI: mongodb://user-mongodb:27017/library_user_db
+      SPRING_DATA_MONGODB_DATABASE: library_user_db
+
+  # =========================
+  # BOOK SERVICE
+  # =========================
+  book-service:
+    image: library-book-service:latest
+    container_name: book-service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - book-mongodb
+    environment:
+      SERVER_PORT: 8080
+      SPRING_DATA_MONGODB_URI: mongodb://book-mongodb:27017/library_db
+      SPRING_DATA_MONGODB_DATABASE: library_db
+
+  # =========================
+  # BORROW SERVICE
+  # =========================
   borrow-service:
-    build: .
+    image: library-borrow-service:latest
     container_name: borrow-service
     ports:
       - "8083:8083"
     depends_on:
-      - mongodb
+      - borrow-mongodb
     environment:
-      SPRING_DATA_MONGODB_URI: mongodb://mongodb:27017/library_db
       SERVER_PORT: 8083
+      SPRING_DATA_MONGODB_URI: mongodb://borrow-mongodb:27017/borrow_service_db
+
+  # =========================
+  # NOTIFICATION SERVICE
+  # =========================
+  notification-service:
+    image: library-notification-service:latest
+    container_name: notification-service
+    ports:
+      - "8084:8084"
+    depends_on:
+      - notification-mongodb
+    environment:
+      SERVER_PORT: 8084
+      SPRING_DATA_MONGODB_URI: mongodb://notification-mongodb:27017/library_notification
+      SPRING_DATA_MONGODB_DATABASE: library_notification
+
+  # =========================
+  # API GATEWAY
+  # =========================
+  api-gateway:
+    image: library-api-gateway:latest
+    container_name: api-gateway
+    ports:
+      - "8085:8085"
+    depends_on:
+      - user-service
+      - book-service
+      - borrow-service
+      - notification-service
 
 volumes:
+  user-mongo-data:
+  book-mongo-data:
   borrow-mongo-data:
+  notification-mongo-data:

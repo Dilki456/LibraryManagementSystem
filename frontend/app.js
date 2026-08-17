@@ -1,5 +1,5 @@
-/* =========================================================
-   LIBRARYOS — PROFESSIONAL FRONTEND
+﻿/* =========================================================
+   LIBRARYOS â€” PROFESSIONAL FRONTEND
    API Gateway: http://localhost:8085
    ========================================================= */
 
@@ -1306,10 +1306,19 @@ function renderBorrows() {
 
 
                         <td>
-                            ${escapeHtml(
-                                borrow.returnDate ||
-                                "—"
-                            )}
+                            ${
+                                borrow.returnDate
+                                    ? escapeHtml(borrow.returnDate)
+                                    : borrow.status === "BORROWED"
+                                        ? `
+                                            <button
+                                                class="btn btn-small"
+                                                onclick="returnBorrow('${borrow.id}')">
+                                                Return
+                                            </button>
+                                          `
+                                        : "—"
+                            }
                         </td>
 
                     </tr>
@@ -1362,6 +1371,80 @@ function renderBorrows() {
 
         </table>
     `;
+}
+
+
+/* =========================================================
+   RETURN BORROW
+   ========================================================= */
+
+async function returnBorrow(id) {
+
+    if (!id) {
+        toast("Invalid borrow record");
+        return;
+    }
+
+    const borrow =
+        state.borrows.find(
+            item => item.id === id
+        );
+
+    if (!borrow) {
+        toast("Borrow record not found");
+        return;
+    }
+
+    if (borrow.status === "RETURNED") {
+        toast("This book has already been returned");
+        return;
+    }
+
+    if (!confirm("Are you sure you want to return this book?")) {
+        return;
+    }
+
+    try {
+
+        const body = {
+
+            userId: borrow.userId,
+
+            bookId: borrow.bookId,
+
+            borrowDate: borrow.borrowDate,
+
+            dueDate: borrow.dueDate,
+
+            returnDate:
+                new Date()
+                    .toISOString()
+                    .slice(0, 10),
+
+            status: "RETURNED"
+        };
+
+        await api(
+            "/api/borrow/" + id,
+            {
+                method: "PUT",
+                body: JSON.stringify(body)
+            }
+        );
+
+        toast("Book returned successfully");
+
+        await loadBorrows();
+
+        await loadBooks();
+
+    } catch (error) {
+
+        toast(
+            "Return failed: " +
+            error.message
+        );
+    }
 }
 
 
@@ -1636,7 +1719,7 @@ function renderNotifications() {
                                 "INFO"
                             )}
 
-                            · User
+                            Â· User
 
                             ${escapeHtml(
                                 notification.userId ||
