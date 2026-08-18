@@ -1842,7 +1842,7 @@ if (loginForm) {
                 toast(
                     "Login successful"
                 );
-
+                showSection("dashboard");
 
             } catch (error) {
 
@@ -1850,7 +1850,7 @@ if (loginForm) {
                     document.getElementById(
                         "authResult"
                     );
-
+             
 
                 if (result) {
 
