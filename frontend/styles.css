@@ -2104,3 +2104,602 @@ footer {
         bottom: 10px;
     }
 }
+/* =========================================================
+   LIBRARYOS — FINAL DARK DASHBOARD OVERRIDES
+   ========================================================= */
+
+/* Hide technical dashboard elements */
+.bottom-grid {
+    display: none !important;
+}
+
+.sidebar-bottom {
+    display: none !important;
+}
+
+.gateway-status {
+    display: none !important;
+}
+
+.gateway-pill {
+    display: none !important;
+}
+
+.stat-content small {
+    display: none !important;
+}
+
+/* =========================================================
+   DARK PROFESSIONAL THEME
+   ========================================================= */
+
+:root {
+    --bg: #07090b;
+    --white: #101519;
+
+    --text: #f3f7f5;
+    --text-2: #c3cec8;
+    --muted: #7d8984;
+
+    --border: #222d31;
+
+    --green: #19c982;
+    --green-dark: #0e9b60;
+    --green-light: #0d2b20;
+
+    --teal: #32a9b5;
+    --teal-light: #102b30;
+
+    --amber: #e2a63d;
+    --amber-light: #302613;
+
+    --coral: #e46b68;
+    --coral-light: #32191c;
+
+    --red: #d94b59;
+    --red-light: #32191d;
+
+    --shadow-sm:
+        0 8px 28px rgba(0, 0, 0, 0.28);
+
+    --shadow-md:
+        0 18px 50px rgba(0, 0, 0, 0.42);
+}
+
+
+/* =========================================================
+   BASE
+   ========================================================= */
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background:
+        radial-gradient(
+            circle at 85% 0%,
+            rgba(25, 201, 130, 0.06),
+            transparent 28%
+        ),
+        #07090b;
+
+    color: var(--text);
+}
+
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+::-webkit-scrollbar-track {
+    background: #07090b;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #263238;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #16845c;
+}
+
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+
+.sidebar {
+    background:
+        linear-gradient(
+            180deg,
+            #050807 0%,
+            #07110d 55%,
+            #050807 100%
+        );
+
+    border-right: 1px solid #1c2924;
+}
+
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+
+.nav-item {
+    color: #87948e;
+}
+
+.nav-item:hover {
+    background: #101916;
+    color: white;
+}
+
+.nav-item.active {
+    background:
+        linear-gradient(
+            90deg,
+            #119c62,
+            #087947
+        );
+
+    color: white;
+
+    box-shadow:
+        0 8px 24px rgba(25, 201, 130, 0.16);
+}
+
+
+/* =========================================================
+   MAIN
+   ========================================================= */
+
+.main {
+    background: #07090b;
+}
+
+
+/* =========================================================
+   TOP SEARCH
+   ========================================================= */
+
+.search-box {
+    background: #101519;
+    border-color: #252f34;
+}
+
+.search-box input {
+    color: #eaf1ee;
+}
+
+.search-box input::placeholder {
+    color: #68746f;
+}
+
+.search-box kbd {
+    background: #151b1e;
+    border-color: #2b3539;
+    color: #7f8b86;
+}
+
+
+/* =========================================================
+   TOP BUTTONS
+   ========================================================= */
+
+.top-button {
+    background: #101519;
+    border-color: #252f34;
+    color: #9ba7a2;
+}
+
+.top-button:hover {
+    background: #151d20;
+    border-color: #315243;
+    color: #20d188;
+}
+
+
+/* =========================================================
+   PROFILE
+   ========================================================= */
+
+.profile strong {
+    color: #edf4f0;
+}
+
+.profile small {
+    color: #78847f;
+}
+
+.profile > span {
+    color: #7f8b86;
+}
+
+
+/* =========================================================
+   PAGE HEADINGS
+   ========================================================= */
+
+.page-heading h1,
+.section-header h1 {
+    color: #f4f8f6;
+}
+
+.page-heading p,
+.section-header p {
+    color: #78847f;
+}
+
+
+/* =========================================================
+   STATISTICS
+   ========================================================= */
+
+.stat-card {
+    background:
+        linear-gradient(
+            145deg,
+            #111719,
+            #0b1013
+        );
+
+    border-color: #222d31;
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.30);
+}
+
+.stat-card:hover {
+    border-color: #315243;
+
+    box-shadow:
+        0 16px 40px rgba(0, 0, 0, 0.42);
+}
+
+.stat-content span {
+    color: #8b9792;
+}
+
+.stat-content strong {
+    color: #f7faf8;
+}
+
+.stat-arrow {
+    color: #64716c;
+}
+
+
+/* =========================================================
+   STAT ICONS
+   ========================================================= */
+
+.stat-icon.books,
+.service-icon.books {
+    color: #1bd188;
+    background: #0b2b20;
+}
+
+.stat-icon.members,
+.service-icon.members {
+    color: #42b8c4;
+    background: #102b30;
+}
+
+.stat-icon.borrowing,
+.service-icon.borrowing {
+    color: #e6ad48;
+    background: #302613;
+}
+
+.stat-icon.notifications,
+.service-icon.notifications {
+    color: #eb7773;
+    background: #32191c;
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.hero-card {
+    background:
+        radial-gradient(
+            circle at 82% 30%,
+            rgba(25, 201, 130, 0.16),
+            transparent 31%
+        ),
+        linear-gradient(
+            135deg,
+            #06120d,
+            #0b2619
+        );
+
+    border: 1px solid #1d4935;
+
+    box-shadow:
+        0 20px 55px rgba(0, 0, 0, 0.42);
+}
+
+.hero-card h2 {
+    color: white;
+}
+
+.hero-card h2 span {
+    color: #53e2a1;
+}
+
+.hero-card p {
+    color: #a8b8b1;
+}
+
+
+/* =========================================================
+   HERO BUTTONS
+   ========================================================= */
+
+.btn.primary {
+    background:
+        linear-gradient(
+            135deg,
+            #20d889,
+            #0c9c5c
+        );
+
+    color: #03130c;
+}
+
+.btn.primary:hover {
+    background: #19c982;
+}
+
+.btn.light {
+    background: #111719;
+    border-color: #2a3539;
+    color: #d7e1dc;
+}
+
+.btn.hero-outline {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: #3d6755;
+    color: #d8e6df;
+}
+
+.btn.hero-outline:hover {
+    background: rgba(255, 255, 255, 0.09);
+}
+
+
+/* =========================================================
+   QUICK PANEL
+   ========================================================= */
+
+.quick-panel {
+    background:
+        linear-gradient(
+            145deg,
+            #111719,
+            #0c1114
+        );
+
+    border-color: #222d31;
+
+    box-shadow:
+        0 12px 35px rgba(0, 0, 0, 0.30);
+}
+
+.panel-heading h3 {
+    color: #edf3f0;
+}
+
+.panel-heading p {
+    color: #707c77;
+}
+
+
+/* =========================================================
+   QUICK ACTIONS
+   ========================================================= */
+
+.quick-action {
+    background: #0d1315;
+    border-color: #222d31;
+}
+
+.quick-action:hover {
+    background: #151d20;
+    border-color: #315243;
+}
+
+.quick-action b {
+    color: #e7eeeb;
+}
+
+.quick-action small {
+    color: #727e79;
+}
+
+.quick-action > strong {
+    color: #71807a;
+}
+
+
+/* =========================================================
+   TABLES
+   ========================================================= */
+
+.table-container {
+    background: #101519;
+    border-color: #222d31;
+}
+
+.data-table th {
+    color: #8d9994;
+    background: #151b1e;
+    border-bottom-color: #263136;
+}
+
+.data-table td {
+    color: #c7d1cc;
+    border-bottom-color: #202a2e;
+}
+
+.data-table tbody tr:hover {
+    background: #151c1f;
+}
+
+.data-table td small {
+    color: #74817b;
+}
+
+.tag {
+    color: #55d59c;
+    background: #0d2b20;
+}
+
+.small-btn {
+    background: #101619;
+    border-color: #29353a;
+    color: #aab5b0;
+}
+
+.small-btn:hover {
+    background: #172024;
+}
+
+.small-btn.danger {
+    color: #ed7779;
+}
+
+
+/* =========================================================
+   NOTIFICATIONS
+   ========================================================= */
+
+.notification {
+    background: #101519;
+    border-color: #222d31;
+}
+
+.notification strong {
+    color: #e8efeb;
+}
+
+.notification span {
+    color: #7b8782;
+}
+
+
+/* =========================================================
+   SECTION ACTIONS
+   ========================================================= */
+
+.section-actions input {
+    background: #101519;
+    border-color: #252f34;
+    color: #eaf1ee;
+}
+
+.section-actions input::placeholder {
+    color: #68746f;
+}
+
+.section-actions input:focus {
+    border-color: #3a765a;
+
+    box-shadow:
+        0 0 0 3px rgba(25, 201, 130, 0.09);
+}
+
+
+/* =========================================================
+   AUTH
+   ========================================================= */
+
+.auth-card {
+    background: #101519;
+    border-color: #222d31;
+}
+
+.auth-card label,
+.modal-form label {
+    color: #8c9893;
+}
+
+.auth-card input,
+.auth-card select,
+.modal-form input,
+.modal-form select {
+    background: #0d1315;
+    border-color: #252f34;
+    color: #e7eeeb;
+}
+
+.auth-card input:focus,
+.auth-card select:focus,
+.modal-form input:focus,
+.modal-form select:focus {
+    border-color: #3a765a;
+
+    box-shadow:
+        0 0 0 3px rgba(25, 201, 130, 0.09);
+}
+
+.result-box {
+    background: #0d1315;
+    border-color: #252f34;
+    color: #aab5b0;
+}
+
+
+/* =========================================================
+   MODALS
+   ========================================================= */
+
+dialog {
+    background: #101519;
+    color: #e8efeb;
+
+    box-shadow:
+        0 25px 80px rgba(0, 0, 0, 0.65);
+}
+
+dialog::backdrop {
+    background: rgba(0, 0, 0, 0.70);
+}
+
+.modal-header h3 {
+    color: #f2f7f4;
+}
+
+.close-modal {
+    background: #1a2226;
+    color: #aab5b0;
+}
+
+.close-modal:hover {
+    background: #222d31;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+footer {
+    color: #56635d;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 800px) {
+    .mobile-menu {
+        background: #101519;
+        border-color: #252f34;
+        color: #aab5b0;
+    }
+}
